@@ -1,0 +1,13 @@
+[Unit]
+Description={{api_description}}
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/api/{{api_name}}
+Environment="PATH=/home/ubuntu/.local/bin"
+ExecStart=/home/ubuntu/.local/bin/gunicorn --workers 2 --bind unix:{{api_name}}.sock -m 007 wsgi:app
+
+[Install]
+WantedBy=multi-user.target
